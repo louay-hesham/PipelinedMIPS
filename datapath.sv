@@ -29,7 +29,7 @@ module datapath(	input logic clk, reset,
  	
 	// hazard detection
  	hazard h(	rsD, rtD, rsE, rtE, writeregE, writeregM,
- 			writeregW,regwriteE, regwriteM, regwriteW,
+ 			writeregW, regwriteE, regwriteM, regwriteW,
  			memtoregE, memtoregM, branchD,
  			forwardaD, forwardbD, forwardaE, forwardbE,
  			stallF, stallD, flushE);

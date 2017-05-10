@@ -12,6 +12,13 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 Top level modules:
 	alu
 
+} {} {}} {I:/College/Computer Architecture/PipelinedMIPS/maindecoder.sv} {1 {vlog -work work -sv -stats=none {I:/College/Computer Architecture/PipelinedMIPS/maindecoder.sv}
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module maindec
+
+Top level modules:
+	maindec
+
 } {} {}} {I:/College/Computer Architecture/PipelinedMIPS/top.sv} {1 {vlog -work work -sv -stats=none {I:/College/Computer Architecture/PipelinedMIPS/top.sv}
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module top
