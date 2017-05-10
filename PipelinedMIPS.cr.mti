@@ -19,19 +19,33 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 Top level modules:
 	top
 
-} {} {}} {I:/College/Computer Architecture/PipelinedMIPS/maindecoder.sv} {1 {vlog -work work -sv -stats=none {I:/College/Computer Architecture/PipelinedMIPS/maindecoder.sv}
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module maindec
-
-Top level modules:
-	maindec
-
 } {} {}} {I:/College/Computer Architecture/PipelinedMIPS/flipflop.sv} {1 {vlog -work work -sv -stats=none {I:/College/Computer Architecture/PipelinedMIPS/flipflop.sv}
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module flopr
 
 Top level modules:
 	flopr
+
+} {} {}} {I:/College/Computer Architecture/PipelinedMIPS/mux3.sv} {1 {vlog -work work -sv -stats=none {I:/College/Computer Architecture/PipelinedMIPS/mux3.sv}
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module mux3
+
+Top level modules:
+	mux3
+
+} {} {}} {I:/College/Computer Architecture/PipelinedMIPS/eqcmp.sv} {1 {vlog -work work -sv -stats=none {I:/College/Computer Architecture/PipelinedMIPS/eqcmp.sv}
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module eqcmp
+
+Top level modules:
+	eqcmp
+
+} {} {}} {I:/College/Computer Architecture/PipelinedMIPS/flopenr.sv} {1 {vlog -work work -sv -stats=none {I:/College/Computer Architecture/PipelinedMIPS/flopenr.sv}
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module flopenr
+
+Top level modules:
+	flopenr
 
 } {} {}} {I:/College/Computer Architecture/PipelinedMIPS/floprc.sv} {1 {vlog -work work -sv -stats=none {I:/College/Computer Architecture/PipelinedMIPS/floprc.sv}
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
@@ -75,13 +89,6 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 Top level modules:
 	aludec
 
-} {} {}} {I:/College/Computer Architecture/PipelinedMIPS/flopenrc.sv} {1 {vlog -work work -sv -stats=none {I:/College/Computer Architecture/PipelinedMIPS/flopenrc.sv}
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module flopenrc
-
-Top level modules:
-	flopenrc
-
 } {} {}} {I:/College/Computer Architecture/PipelinedMIPS/leftshift.sv} {1 {vlog -work work -sv -stats=none {I:/College/Computer Architecture/PipelinedMIPS/leftshift.sv}
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module sl2
@@ -89,12 +96,12 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 Top level modules:
 	sl2
 
-} {} {}} {I:/College/Computer Architecture/PipelinedMIPS/multiplexer.sv} {1 {vlog -work work -sv -stats=none {I:/College/Computer Architecture/PipelinedMIPS/multiplexer.sv}
+} {} {}} {I:/College/Computer Architecture/PipelinedMIPS/flopenrc.sv} {1 {vlog -work work -sv -stats=none {I:/College/Computer Architecture/PipelinedMIPS/flopenrc.sv}
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module mux2
+-- Compiling module flopenrc
 
 Top level modules:
-	mux2
+	flopenrc
 
 } {} {}} {I:/College/Computer Architecture/PipelinedMIPS/dmem.sv} {1 {vlog -work work -sv -stats=none {I:/College/Computer Architecture/PipelinedMIPS/dmem.sv}
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
@@ -102,6 +109,13 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 
 Top level modules:
 	dmem
+
+} {} {}} {I:/College/Computer Architecture/PipelinedMIPS/multiplexer.sv} {1 {vlog -work work -sv -stats=none {I:/College/Computer Architecture/PipelinedMIPS/multiplexer.sv}
+Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
+-- Compiling module mux2
+
+Top level modules:
+	mux2
 
 } {} {}} {I:/College/Computer Architecture/PipelinedMIPS/controller.sv} {1 {vlog -work work -sv -stats=none {I:/College/Computer Architecture/PipelinedMIPS/controller.sv}
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
