@@ -1,11 +1,11 @@
-module hazard(input logic [4:0] rsD, rtD, rsE, rtE, WriteRegE, WriteRegM, WriteRegW, input logic RegWriteE, RegWriteM, RegWriteW, MemtoRegE, MemtoRegM, branchD,
- 		      output logic [1:0] ForwardAE, ForwardBE, output logic StallF, StallD, flushE);
+module hazard(input logic [4:0] rsD, rtD, rsE, rtE, WriteRegE, WriteRegM, WriteRegW, input logic RegWriteE, RegWriteM, RegWriteW, MemtoRegE, MemtoRegM, BranchD,
+ 		      output logic [1:0] ForwardAE, ForwardBE, output logic ForwardAD, ForwardBD, StallF, StallD, flushE);
  
-	logic lwstallD, branchstallD;
+	logic lwstall, branchstall;
  
 
  
-	// Forwarding
+	// Forwarding during execution in case of data Hazard
  	always_comb
  	begin
 	
@@ -32,6 +32,18 @@ module hazard(input logic [4:0] rsD, rtD, rsE, rtE, WriteRegE, WriteRegM, WriteR
 
  			
  	end
+	
+	// Forwarding during decoding to check equality in case of control Hazard
+	
+	assign ForwardAD = (rsD != 0) & (rsD == WriteRegM) & RegWriteM;
+	assign ForwardBD = (rtD != 0) & (rtD == WriteRegM) & RegWriteM;
+	
+	
+	// Stalling
+	assign lwstall = ( (rsD == rtE) | (rtD == rtE) ) & MemtoRegE;
+	assign branchstall = (BranchD & RegWriteE & (WriteRegE == rsD | WriteRegE == rtD)) | (BranchD & MemtoRegM & (WriteRegM == rsD | WriteRegM == rtD));
+	
+	assign StallF = StallD = FlushE = (lwstall | branchstall);
  
 
 endmodule
