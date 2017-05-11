@@ -60,4 +60,11 @@ module datapath(	input logic clk, reset,
 	mux2 #(32) reg2ForwardMux(reg2D, aluoutM, forwardbD, comp2D);
 	eqcmp #(32) comparator(comp1D, comp2D, equalD);
 
+	//transition from decode to execute
+	floprc #(32) reg1DtoE(clk, reset, flushE, reg1D, reg1E);
+	floprc #(32) reg2DtoE(clk, reset, flushE, reg2D, reg2E);
+	floprc #(32) signimmDtoE(clk, reset, flushE, signimmD, signimmE);
+	floprc #(5)  rsDtoE(clk, reset, flushE, rsD, rsE);
+	floprc #(5)  rtDtoE(clk, reset, flushE, rtD, rtE);
+	floprc #(5)  rdDtoE(clk, reset, flushE, rdD, rdE);
 endmodule
