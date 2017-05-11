@@ -33,16 +33,18 @@ module datapath(	input logic clk, reset,
  			forwardaD, forwardbD, forwardaE, forwardbE,
  			stallF, stallD, flushE);
 
-	//next pc logic, also it's the fetch state
+	//next pc logic
 	assign pcjumpF = {pcplus4D[31:28], instrD[25:0], 2'b00};
 	mux2 #(32) pcbranchmux(pcplus4F, pcbranchD, pcsrcD, pcnextbrFD);
 	mux2 #(32) pcjumpmux(pcnextbrFD, pcjumpF, jumpD, pcnextFD);
+
+	//fetch stage
 	flopenr #(32) pcreg(clk, reset, ~stallF, pcnextFD, pcF);
 	adder pcplus4adder(pcF, 32'b100, pcplus4F);
 	
 	//transition from fetch to decode
-	flopenrc #(32) instrFtoD(clk, reset, ~stallD, pcsrcD, instrF, instrD);
-	flopenrc #(32) pcplus4FtoD(clk, reset, ~stallD, pcsrcD, pcplus4F, pcplus4D);
+	flopenrc #(32) instrFtoD(clk, reset, ~stallD, flushD, instrF, instrD);
+	flopenr #(32) pcplus4FtoD(clk, reset, ~stallD, pcplus4F, pcplus4D);
 		
 	//decode stage
 	assign opD = instrD[31:26];
@@ -56,7 +58,7 @@ module datapath(	input logic clk, reset,
 	sl2 leftShift(signimmD, signimmshD);
 	adder branchTargetAddress(signimmshD, pcplus4D, pcbranchD);
 
-	regfile regfile(clk, regwriteW, rsD, rtD, writeregW, resultW, reg1D, reg2D);
+	regfile rfile(clk, regwriteW, rsD, rtD, writeregW, resultW, reg1D, reg2D);
 	mux2 #(32) reg1ForwardMux(reg1D, aluoutM, forwardaD, comp1D);
 	mux2 #(32) reg2ForwardMux(reg2D, aluoutM, forwardbD, comp2D);
 	eqcmp #(32) comparator(comp1D, comp2D, equalD);
@@ -90,7 +92,7 @@ module datapath(	input logic clk, reset,
 	flopr #(5) writeregMtoW(clk, reset, writeregM, writeregW);
 	
 	//write back stage
-	mux2 #(32) resultMux(readdataW, aluoutW, memtoregW, resultW);
+	mux2 #(32) resultMux(aluoutW, readdataW, memtoregW, resultW);
 	
 
 endmodule
