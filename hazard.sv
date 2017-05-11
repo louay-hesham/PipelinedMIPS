@@ -17,15 +17,15 @@ module hazard(	input logic [4:0] rsD, rtD, rsE, rtE,
  	begin
  		forwardaE = 2'b00; forwardbE = 2'b00;
  		if (rsE != 0)
- 			if (rsE == writeregM & regwriteM)
+ 			if ((rsE == writeregM) & regwriteM)
  				forwardaE = 2'b10;
- 			else if (rsE == writeregW & regwriteW)
+ 			else if ((rsE == writeregW) & regwriteW)
  				forwardaE = 2'b01;
  
 		if (rtE != 0)
- 			if (rtE == writeregM & regwriteM)
+ 			if ((rtE == writeregM) & regwriteM)
  				forwardbE = 2'b10;
- 			else if (rtE == writeregW & regwriteW)
+ 			else if ((rtE == writeregW) & regwriteW)
  				forwardbE = 2'b01;
  	end
  

@@ -61,13 +61,6 @@ Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 
 Top level modules:
 	floprc
 
-} {} {}} {I:/College/Computer Architecture/PipelinedMIPS/regfile.sv} {1 {vlog -work work -sv -stats=none {I:/College/Computer Architecture/PipelinedMIPS/regfile.sv}
-Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
--- Compiling module regfile
-
-Top level modules:
-	regfile
-
 } {} {}} {I:/College/Computer Architecture/PipelinedMIPS/datapath.sv} {1 {vlog -work work -sv -stats=none {I:/College/Computer Architecture/PipelinedMIPS/datapath.sv}
 Model Technology ModelSim PE Student Edition vlog 10.4a Compiler 2015.03 Apr  7 2015
 -- Compiling module datapath
