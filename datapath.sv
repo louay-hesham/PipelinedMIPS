@@ -38,5 +38,26 @@ module datapath(	input logic clk, reset,
 	mux2 #(32) pcmux(pcnextbrFD,{pcplus4D[31:28], instrD[25:0], 2'b00}, jumpD, pcnextFD);
 	flopenr #(32) pcreg(clk, reset, ~stallF, pcnextFD, pcF);
 	adder (pcF, 32'b100, pcplus4F);
+	
+	//transition from fetch to decode
+	flopenrc #(32) instrFtoD(clk, reset, ~stallD, pcsrcD, instrF, instrD);
+	flopenrc #(32) pcplus4FtoD(clk, reset, ~stallD, pcsrcD, pcplus4F, pcplus4D);
+		
+	//decode stage
+	assign opD = instrD[31:26];
+	assign functD = instrD[5:0];
+	assign rsD = instrD[25:21];
+	assign rtD = instrD[20:16];
+	assign rdD = instrD[15:11];
+	assign flushD = pcsrcD | jumpD;
+	
+	signext signext(instrD[15:0], signimmD);
+	sl2 leftShift(signimmD, signimmshD);
+	adder branchTargetAddress(signimmshD, pcplus4D, pcbranchD);
+
+	regfile regfile(clk, regwriteW, rsD, rtD, writeregW, resultW, reg1D, reg2D);
+	mux2 #(32) reg1ForwardMux(reg1D, aluoutM, forwardaD, comp1D);
+	mux2 #(32) reg2ForwardMux(reg2D, aluoutM, forwardbD, comp2D);
+	eqcmp #(32) comparator(comp1D, comp2D, equalD);
 
 endmodule
