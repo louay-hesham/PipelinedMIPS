@@ -33,6 +33,10 @@ module datapath(	input logic clk, reset,
  			forwardaD, forwardbD, forwardaE, forwardbE,
  			stallF, stallD, flushE);
 
- 	
+	//next pc logic, also it's the fetch state
+	mux2 #(32) pcbranchmux(pcplus4F, pcbranchD, pcsrcD, pcnextbrFD);
+	mux2 #(32) pcmux(pcnextbrFD,{pcplus4D[31:28], instrD[25:0], 2'b00}, jumpD, pcnextFD);
+	flopenr #(32) pcreg(clk, reset, ~stallF, pcnextFD, pcF);
+	adder (pcF, 32'b100, pcplus4F);
 
 endmodule
