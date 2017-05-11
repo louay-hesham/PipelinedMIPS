@@ -82,6 +82,11 @@ module datapath(	input logic clk, reset,
 
 	//memory stage
 	//no components in data path so it's empty. the dmem module is instantiated in the top module.
+
+	//transition from memory to write back
+	flopr #(32) readdataMtoW(clk, reset, readdataM, readdataW);
+	flopr #(32) aluoutMtoW(clk, reset, aluoutM, aluoutW);
+	flopr #(5) writeregMtoW(clk, reset, writeregM, writeregW);
 	
 	
 
