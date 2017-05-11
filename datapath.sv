@@ -88,6 +88,8 @@ module datapath(	input logic clk, reset,
 	flopr #(32) aluoutMtoW(clk, reset, aluoutM, aluoutW);
 	flopr #(5) writeregMtoW(clk, reset, writeregM, writeregW);
 	
+	//write back stage
+	mux2 #(32) resultMux(readdataW, aluoutW, memtoregW, resultW);
 	
 
 endmodule
