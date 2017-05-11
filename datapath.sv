@@ -75,7 +75,13 @@ module datapath(	input logic clk, reset,
 	mux2 #(32) srcbmux(srcbForwardE, signimmE, alusrcE, srcbE);
 	alu alu(srcaE, srcbE, alucontrolE, aluoutE);
 
+	//transition from execute to memory
+	flopr #(32) aluoutEtoM(clk, reset, aluoutE, aluoutM);
+	flopr #(32) writedataEtoM(clk, reset, srcbForwardE, writedataM);
+	flopr #(5) writeregEtoM(clk, reset, writeregE, writeregM);
 
+	//memory stage
+	//no components in data path so it's empty. the dmem module is instantiated in the top module.
 	
 	
 
