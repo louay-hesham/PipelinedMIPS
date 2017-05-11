@@ -21,8 +21,8 @@ module datapath(	input logic clk, reset,
  	logic flushD;
  	logic [31:0] pcnextFD, pcnextbrFD, pcplus4F, pcbranchD;
  	logic [31:0] signimmD, signimmE, signimmshD;
- 	logic [31:0] reg1D, comp1D, reg1E, srca2E;
- 	logic [31:0] reg2D, comp2D, reg2E, srcb2E, srcb3E;
+ 	logic [31:0] reg1D, comp1D, reg1E, srcaE;
+ 	logic [31:0] reg2D, comp2D, reg2E, srcbForwardE, srcbE;
  	logic [31:0] pcplus4D, instrD;
  	logic [31:0] aluoutE, aluoutW;
  	logic [31:0] readdataW, resultW;
@@ -67,4 +67,16 @@ module datapath(	input logic clk, reset,
 	floprc #(5)  rsDtoE(clk, reset, flushE, rsD, rsE);
 	floprc #(5)  rtDtoE(clk, reset, flushE, rtD, rtE);
 	floprc #(5)  rdDtoE(clk, reset, flushE, rdD, rdE);
+
+	//execute stage
+	mux2 #(5) writeregMux(rtE, rdE, regdstE, writeregE);
+	mux3 #(32) srcaForwardMux (reg1E, resultW, aluoutM, forwardaE, srcaE);
+	mux3 #(32) srcbForwardMux (reg2E, resultW, aluoutM, forwardbE, srcbForwardE);
+	mux2 #(32) srcbmux(srcbForwardE, signimmE, alusrcE, srcbE);
+	alu alu(srcaE, srcbE, alucontrolE, aluoutE);
+
+
+	
+	
+
 endmodule
