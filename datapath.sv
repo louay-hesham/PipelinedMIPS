@@ -19,7 +19,7 @@ module datapath(	input logic clk, reset,
  	logic [4:0] rsD, rtD, rdD, rsE, rtE, rdE;
  	logic [4:0] writeregE, writeregM, writeregW;
  	logic flushD;
- 	logic [31:0] pcnextFD, pcnextbrFD, pcplus4F, pcbranchD;
+ 	logic [31:0] pcnextFD, pcnextbrFD, pcplus4F, pcjumpF, pcbranchD;
  	logic [31:0] signimmD, signimmE, signimmshD;
  	logic [31:0] reg1D, comp1D, reg1E, srcaE;
  	logic [31:0] reg2D, comp2D, reg2E, srcbForwardE, srcbE;
@@ -34,10 +34,11 @@ module datapath(	input logic clk, reset,
  			stallF, stallD, flushE);
 
 	//next pc logic, also it's the fetch state
+	assign pcjumpF = {pcplus4D[31:28], instrD[25:0], 2'b00};
 	mux2 #(32) pcbranchmux(pcplus4F, pcbranchD, pcsrcD, pcnextbrFD);
-	mux2 #(32) pcmux(pcnextbrFD,{pcplus4D[31:28], instrD[25:0], 2'b00}, jumpD, pcnextFD);
+	mux2 #(32) pcjumpmux(pcnextbrFD, pcjumpF, jumpD, pcnextFD);
 	flopenr #(32) pcreg(clk, reset, ~stallF, pcnextFD, pcF);
-	adder (pcF, 32'b100, pcplus4F);
+	adder pcplus4adder(pcF, 32'b100, pcplus4F);
 	
 	//transition from fetch to decode
 	flopenrc #(32) instrFtoD(clk, reset, ~stallD, pcsrcD, instrF, instrD);
