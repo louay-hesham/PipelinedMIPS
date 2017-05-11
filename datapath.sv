@@ -21,8 +21,8 @@ module datapath(	input logic clk, reset,
  	logic flushD;
  	logic [31:0] pcnextFD, pcnextbrFD, pcplus4F, pcbranchD;
  	logic [31:0] signimmD, signimmE, signimmshD;
- 	logic [31:0] srcaD, srca2D, srcaE, srca2E;
- 	logic [31:0] srcbD, srcb2D, srcbE, srcb2E, srcb3E;
+ 	logic [31:0] reg1D, comp1D, reg1E, srca2E;
+ 	logic [31:0] reg2D, comp2D, reg2E, srcb2E, srcb3E;
  	logic [31:0] pcplus4D, instrD;
  	logic [31:0] aluoutE, aluoutW;
  	logic [31:0] readdataW, resultW;
