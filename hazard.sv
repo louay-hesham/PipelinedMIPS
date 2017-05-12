@@ -1,5 +1,5 @@
 module hazard(input logic [4:0] rsD, rtD, rsE, rtE, WriteRegE, WriteRegM, WriteRegW, input logic RegWriteE, RegWriteM, RegWriteW, MemtoRegE, MemtoRegM, BranchD,
- 		      output logic [1:0] ForwardAE, ForwardBE, output logic ForwardAD, ForwardBD, StallF, StallD, flushE);
+ 		      output logic [1:0] ForwardAE, ForwardBE, output logic ForwardAD, ForwardBD, StallF, StallD, FlushE);
  
 	logic lwstall, branchstall;
  
@@ -43,7 +43,9 @@ module hazard(input logic [4:0] rsD, rtD, rsE, rtE, WriteRegE, WriteRegM, WriteR
 	assign lwstall = ( (rsD == rtE) | (rtD == rtE) ) & MemtoRegE;
 	assign branchstall = (BranchD & RegWriteE & (WriteRegE == rsD | WriteRegE == rtD)) | (BranchD & MemtoRegM & (WriteRegM == rsD | WriteRegM == rtD));
 	
-	assign StallF = StallD = FlushE = (lwstall | branchstall);
+	assign StallF = StallD;
+	assign StallD = FlushE;
+	assign FlushE = (lwstall | branchstall);
  
 
 endmodule
