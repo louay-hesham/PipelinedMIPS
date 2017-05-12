@@ -1,47 +1,51 @@
-module hazard(	input logic [4:0] rsD, rtD, rsE, rtE,
-		input logic [4:0] writeregE, writeregM, writeregW,
- 		input logic regwriteE, regwriteM, regwriteW,
- 		input logic memtoregE, memtoregM, branchD,
- 		output logic forwardaD, forwardbD,
- 		output logic [1:0] forwardaE, forwardbE,
- 		output logic stallF, stallD, flushE);
+module hazard(input logic [4:0] rsD, rtD, rsE, rtE, WriteRegE, WriteRegM, WriteRegW, input logic RegWriteE, RegWriteM, RegWriteW, MemtoRegE, MemtoRegM, BranchD,
+ 		      output logic [1:0] ForwardAE, ForwardBE, output logic ForwardAD, ForwardBD, StallF, StallD, FlushE);
  
-	logic lwstallD, branchstallD;
+	logic lwstall, branchstall;
  
-	// forwarding sources to D stage (branch equality)
- 	assign forwardaD = (rsD !=0 & rsD == writeregM & regwriteM);
- 	assign forwardbD = (rtD !=0 & rtD == writeregM & regwriteM);
+
  
-	// forwarding sources to E stage (ALU)
+	// Forwarding during execution in case of data Hazard
  	always_comb
  	begin
- 		forwardaE = 2'b00; forwardbE = 2'b00;
- 		if (rsE != 0)
- 			if ((rsE == writeregM) & regwriteM)
- 				forwardaE = 2'b10;
- 			else if ((rsE == writeregW) & regwriteW)
- 				forwardaE = 2'b01;
- 
-		if (rtE != 0)
- 			if ((rtE == writeregM) & regwriteM)
- 				forwardbE = 2'b10;
- 			else if ((rtE == writeregW) & regwriteW)
- 				forwardbE = 2'b01;
+	
+		// SrcA
+ 		if (rsE != 0 & rsE == WriteRegM & RegWriteM)
+ 			ForwardAE = 2'b10;
+			
+ 		else if (rsE != 0 & rsE == WriteRegW & RegWriteW)
+			ForwardAE = 2'b01;
+			
+		else
+			ForwardAE = 2'b00;
+			
+			
+		// SrcB	
+		if (rtE != 0 & rtE == WriteRegM & RegWriteM)
+ 			ForwardBE = 2'b10;
+			
+ 		else if (rtE != 0 & rtE == WriteRegW & RegWriteW)
+			ForwardBE = 2'b01;
+			
+		else
+			ForwardBE = 2'b00;
+
+ 			
  	end
+	
+	// Forwarding during decoding to check equality in case of control Hazard
+	
+	assign ForwardAD = (rsD != 0) & (rsD == WriteRegM) & RegWriteM;
+	assign ForwardBD = (rtD != 0) & (rtD == WriteRegM) & RegWriteM;
+	
+	
+	// Stalling
+	assign lwstall = ( (rsD == rtE) | (rtD == rtE) ) & MemtoRegE;
+	assign branchstall = (BranchD & RegWriteE & (WriteRegE == rsD | WriteRegE == rtD)) | (BranchD & MemtoRegM & (WriteRegM == rsD | WriteRegM == rtD));
+	
+	assign StallF = StallD;
+	assign StallD = FlushE;
+	assign FlushE = (lwstall | branchstall);
  
-	// stalls
- 	assign #1 lwstallD = memtoregE & (rtE == rsD | rtE == rtD);
- 	assign #1 branchstallD = branchD & (regwriteE & (writeregE == rsD | writeregE == rtD) | memtoregM & (writeregM == rsD | writeregM == rtD));
- 	assign #1 stallD = lwstallD | branchstallD;
- 	assign #1 stallF = stallD;
- 
-	// stalling D stalls all previous stages
- 	assign #1 flushE = stallD;
- 
-	// stalling D flushes next stage
- 	// Note: not necessary to stall D stage on store
- 	// if source comes from load;
- 	// instead, another bypass network could
- 	// be added from W to M
 
 endmodule
