@@ -27,8 +27,9 @@ module datapath(	input logic clk, reset,
  	logic [31:0] aluoutE, aluoutW;
  	logic [31:0] readdataW, resultW;
  	
- 	hazard h(	rsD, rtD, rsE, rtE, writeregE, writeregM,
- 			writeregW, regwriteE, regwriteM, regwriteW,
+ 	hazard h(	rsD, rtD, rsE, rtE,
+			writeregE, writeregM, writeregW,
+			regwriteE, regwriteM, regwriteW,
  			memtoregE, memtoregM, branchD,
  			forwardaD, forwardbD, forwardaE, forwardbE,
  			stallF, stallD, flushE);
