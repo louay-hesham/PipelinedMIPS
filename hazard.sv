@@ -1,5 +1,10 @@
-module hazard(input logic [4:0] rsD, rtD, rsE, rtE, WriteRegE, WriteRegM, WriteRegW, input logic RegWriteE, RegWriteM, RegWriteW, MemtoRegE, MemtoRegM, BranchD,
- 		      output logic [1:0] ForwardAE, ForwardBE, output logic ForwardAD, ForwardBD, StallF, StallD, FlushE);
+module hazard(	input logic [4:0] rsD, rtD, rsE, rtE,
+		input logic [4:0] WriteRegE, WriteRegM, WriteRegW,
+		input logic MemtoRegE, MemtoRegM, BranchD,
+		input logic RegWriteE, RegWriteM, RegWriteW, 
+		output logic ForwardAD, ForwardBD,
+ 		output logic [1:0] ForwardAE, ForwardBE, 
+		output logic StallF, StallD, FlushE);
  
 	logic lwstall, branchstall;
  
