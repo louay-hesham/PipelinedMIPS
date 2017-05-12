@@ -13,24 +13,26 @@ module controller(	input logic clk, reset,
  	logic memtoregD, memwriteD, alusrcD, regdstD, regwriteD;
  	logic [2:0] alucontrolD;
  	logic memwriteE;
- 
-	maindec md(	opD, memtoregD, memwriteD, branchD,
+      // signales in stage D are out
+	maindec md(opD, memtoregD, memwriteD, branchD,
  			alusrcD, regdstD, regwriteD, jumpD, aluopD);
  
 	aludec ad(functD, aluopD, alucontrolD);
- 	
+        //early branch resolution
 	assign pcsrcD = branchD & equalD;
- 	// pipeline registers
- 	floprc #(8) regE(	clk, reset, flushE, 
-				{memtoregD, memwriteD, alusrcD, regdstD, regwriteD, alucontrolD},
- 				{memtoregE, memwriteE, alusrcE, regdstE, regwriteE, alucontrolE});
- 	
-	flopr #(3) regM(clk, reset,
-			{memtoregE, memwriteE, regwriteE},
- 			{memtoregM, memwriteM, regwriteM});
- 
-	flopr #(2) regW(clk, reset,
- 			{memtoregM, regwriteM},
- 			{memtoregW, regwriteW}); 
+ 	//decode to execute controls transition
+        floprc #(8)   regExecute ( clk,reset,flushE,
+					{regwriteD,memtoregD,memwriteD,alucontrolD,alusrcD,regdstD},
+					{regwriteE,memtoregE,memwriteE,alucontrolE,alusrcE,regdstE});
+					
+ 	//execute to memw  controls transition
+	flopr #(3) regMem(clk, reset,
+				{regwriteE,memtoregE, memwriteE},
+ 				{regwriteM,memtoregM, memwriteM});
+         //mem to writeback  controls transition 
+	flopr #(2) regWriteBack(clk, reset,
+ 					{regwriteM,memtoregM},
+ 					{regwriteW,memtoregW}); 
+
 
 endmodule
