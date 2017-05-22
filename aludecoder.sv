@@ -18,6 +18,8 @@ module aludec(	input logic [5:0] funct,
 				6'b101010: {alucontrol, hien, loen} <= 6'b0111_00; // SLT
 				6'b011000: {alucontrol, hien, loen} <= 6'b1000_11; // MULT
 				6'b011010: {alucontrol, hien, loen} <= 6'b1001_11; // DIV
+				6'b010000: {alucontrol, hien, loen} <= 6'b1010_00; // MFHI
+				6'b010010: {alucontrol, hien, loen} <= 6'b1011_00; // MFLO
 				default:   {alucontrol, hien, loen} <= 6'bxxxx_xx; // ???
 			endcase
 		endcase
