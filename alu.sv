@@ -15,5 +15,7 @@ module alu(input  logic [31:0] a, b,
 				y <= 1;
 			   else
 				y <= 0;
+			8: {hi, lo} <= a * b;
+			default: y <= 32'bx;
 		endcase
 endmodule
