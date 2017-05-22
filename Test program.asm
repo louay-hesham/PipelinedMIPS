@@ -12,7 +12,7 @@ main:   addi $2, $0, 5      # initialize $2 = 5     0           20020005
         and  $5, $3, $4     # $5 = (12 AND 7) = 4   10          00642824 
         add  $5, $5, $4     # $5 = 4 + 7 = 11       14          00a42820 
         beq  $5, $7, end    # shouldn not be taken  18          10a7000a 
-        slt  $4, $3, $4     # $4 = 12 < 7 = 0       1c          0064202a 
+        slti $4, $3, 7      # $4 = 12 < 7 = 0       1c          28640007
         beq  $4, $0, around # should be taken       20          10800001 
         addi $5, $0, 0      # shouldn not happen    24          20050000 
 around: slt  $4, $7, $2     # $4 = 3 < 5 = 1        28          00e2202a 
