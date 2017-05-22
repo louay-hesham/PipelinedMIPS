@@ -79,7 +79,7 @@ module datapath(	input logic clk, reset,
 	mux3 #(32) srcaForwardMux (reg1E, resultW, aluoutM, forwardaE, srcaE);
 	mux3 #(32) srcbForwardMux (reg2E, resultW, aluoutM, forwardbE, srcbForwardE);
 	mux2 #(32) srcbmux(srcbForwardE, signimmE, alusrcE, srcbE);
-	alu alu(srcaE, srcbE, alucontrolE, aluoutE, nexthi, nextlo);
+	alu alu(srcaE, srcbE, alucontrolE, aluoutE, nexthi, nextlo, hi, lo);
 	flopenr #(32) hireg(clk, reset, hienE, nexthi, hi);
 	flopenr #(32) loreg(clk, reset, loenE, nextlo, lo);
 

@@ -22,8 +22,10 @@ around: slt  $4, $7, $2     # $4 = 3 < 5 = 1        28          00e2202a
         lw   $2, 80($0)     # $2 = [80] = 7         38          8c020050 
         j    end            # should be taken       3c          08000011 
         addi $2, $0, 1      # shouldn not happen    40          20020001 
-end:    addi $8, $0, 21     # initialize $8 = 21    44          20080015 
+end:    addi $8, $0, 84     # initialize $8 = 84    44          20080054
         addi $9, $0, 4      # initialize $9 = 4     48          20090004
-        mult $8, $9         # hi,lo = 21*4          4c          01090018
-        div  $8, $9         # lo = 5, hi = 1        50          0109001a
-        sw   $2, 84($0)     # write mem[84] = 7     54          ac020054
+        div  $8, $9         # lo = 21, hi = 0       4c          0109001a
+        mflo $10            # $10 = 21              50          00005012
+        mult $10, $9        # hi,lo = 21*4          4c          01490018
+        mflo $11            # $11 = 84              50          00005812
+        sw   $2, 0($11)     # write mem[84] = 7     54          ad620000
