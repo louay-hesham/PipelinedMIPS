@@ -3,6 +3,7 @@ module alu(input  logic [31:0] a, b,
 	output logic [31:0] y, hi, lo); 
 
 	always_comb // combinational msh sequential 
+	begin
 		case(f)
 			0: y <= a & b;
 			1: y <= a | b;
@@ -18,4 +19,5 @@ module alu(input  logic [31:0] a, b,
 			8: {hi, lo} <= a * b;
 			default: y <= 32'bx;
 		endcase
+	end
 endmodule
