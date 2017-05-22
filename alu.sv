@@ -10,7 +10,7 @@ module alu(input  logic [31:0] a, b,
 			2: y = a + b;
 			3: y = 7'b0000_0000; 
 			4: y = a & ~ b; 
-			
+			5: y = a | ~ b;
 			6: y = a - b;
 			7: if($signed(a) < $signed(b)) 
 				y = 1;
