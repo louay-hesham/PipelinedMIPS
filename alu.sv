@@ -8,7 +8,7 @@ module alu(input  logic [31:0] a, b,
 			0: y <= a & b;
 			1: y <= a | b;
 			2: y <= a + b;
-			3: y <= 7'bz; 
+			3: y <= 32'bz; 
 			4: y <= a & ~ b; 
 			5: y <= a | ~ b;
 			6: y <= a - b;
@@ -17,6 +17,11 @@ module alu(input  logic [31:0] a, b,
 			   else
 				y <= 0;
 			8: {hi, lo} <= a * b;
+			9: 
+			begin
+				lo <= a / b;
+				hi <= a % b;
+			end
 			default: y <= 32'bx;
 		endcase
 	end
