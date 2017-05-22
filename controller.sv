@@ -7,11 +7,11 @@ module controller(	input logic clk, reset,
  			output logic regdstE, regwriteE,
  			output logic regwriteM, regwriteW,
  			output logic jumpD,
- 			output logic [2:0] alucontrolE);
+ 			output logic [3:0] alucontrolE);
  	
 	logic [1:0] aluopD;
  	logic memtoregD, memwriteD, alusrcD, regdstD, regwriteD;
- 	logic [2:0] alucontrolD;
+ 	logic [3:0] alucontrolD;
  	logic memwriteE;
       // signales in stage D are out
 	maindec md(opD, memtoregD, memwriteD, branchD,
@@ -21,7 +21,7 @@ module controller(	input logic clk, reset,
         //early branch resolution
 	assign pcsrcD = branchD & equalD;
  	//decode to execute controls transition
-        floprc #(8)   regExecute ( clk,reset,flushE,
+        floprc #(9)   regExecute ( clk,reset,flushE,
 					{regwriteD,memtoregD,memwriteD,alucontrolD,alusrcD,regdstD},
 					{regwriteE,memtoregE,memwriteE,alucontrolE,alusrcE,regdstE});
 					
