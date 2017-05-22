@@ -1,8 +1,6 @@
 module alu(input  logic [31:0] a, b,
 	input  logic [3:0]  f,
-	output logic [31:0] y); 
-
-	logic [31:0] hi, lo;
+	output logic [31:0] y, hi, lo); 
 
 	always_comb // combinational msh sequential 
 		case(f)
