@@ -7,20 +7,15 @@ module alu(input  logic [31:0] a, b,
 		case(f)
 			0: y = a & b;
 			1: y = a | b;
-			2: y = a+b;
-			3: y = 7'b0000_0000;
-			4: y = a & ~ b;
-			5: y = a | ~ b;
+			2: y = a + b;
+			3: y = 7'b0000_0000; //multiply
+			4: y = a & ~ b; //divide
+			
 			6: y = a - b;
-			7: if($signed(a) < $signed(b)) y = 1;
-				else
+			7: if($signed(a) < $signed(b)) 
+				y = 1;
+			   else
 				y = 0;
-				endcase
-
-			always@(*)
-				if (y == 0) 
-				zero = 1;
-				else
-				zero = 0;
-
+			default: y = 32'bx;
+		endcase
 endmodule
