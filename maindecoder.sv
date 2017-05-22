@@ -17,7 +17,7 @@ module maindec(	input logic [5:0] op,
 		6'b000100: controls <=11'b00000100001; //BEQ
 		6'b001000: controls <=11'b00101000000; //ADDI
 		6'b000010: controls <=11'b00000000100; //J
-		6'b001101: controls <=11'b01101000011; //ori alu opcode = 11, signal ori is on
+		6'b001010: controls <=11'b01101000011; //SLTI alu opcode = 11, signal SLTI is on
 		6'b000101: controls <=11'b10000000001; // BNE same alu opcode as branch 
 		default:   controls <=11'bxxxxxxxxxxx; //illegal op
 		endcase

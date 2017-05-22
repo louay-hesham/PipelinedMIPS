@@ -6,7 +6,7 @@ module aludec(	input logic [5:0] funct,
 		case (aluop)
 			2'b00: {alucontrol, hien, loen} <= 6'b001000; // add (lw,sw,addi)
 			2'b01: {alucontrol, hien, loen} <= 6'b011000; // sub (beq)
-			2'b11: {alucontrol, hien, loen} <= 6'b000100; //ori
+			2'b11: {alucontrol, hien, loen} <= 6'b011100; //slti
 			default: case(funct) // RTYPE
 				6'b100100: {alucontrol, hien, loen} <= 6'b000000; // AND
 				6'b100101: {alucontrol, hien, loen} <= 6'b000100; // OR
