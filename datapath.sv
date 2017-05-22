@@ -4,7 +4,8 @@ module datapath(	input logic clk, reset,
  			input logic alusrcE, regdstE,
  			input logic regwriteE, regwriteM, regwriteW,
  			input logic jumpD,
- 			input logic [2:0] alucontrolE,
+ 			input logic [3:0] alucontrolE,
+			input logic hienE, loenE, 
  			output logic equalD,
  			output logic [31:0] pcF,
  			input logic [31:0] instrF,
@@ -26,6 +27,7 @@ module datapath(	input logic clk, reset,
  	logic [31:0] pcplus4D, instrD;
  	logic [31:0] aluoutE, aluoutW;
  	logic [31:0] readdataW, resultW;
+	logic [31:0] nexthi, nextlo, hi, lo;
  	
  	hazard h(	rsD, rtD, rsE, rtE,
 			writeregE, writeregM, writeregW,
@@ -77,7 +79,9 @@ module datapath(	input logic clk, reset,
 	mux3 #(32) srcaForwardMux (reg1E, resultW, aluoutM, forwardaE, srcaE);
 	mux3 #(32) srcbForwardMux (reg2E, resultW, aluoutM, forwardbE, srcbForwardE);
 	mux2 #(32) srcbmux(srcbForwardE, signimmE, alusrcE, srcbE);
-	alu alu(srcaE, srcbE, alucontrolE, aluoutE);
+	alu alu(srcaE, srcbE, alucontrolE, aluoutE, nexthi, nextlo);
+	flopenr #(32) hireg(clk, reset, hienE, nexthi, hi);
+	flopenr #(32) loreg(clk, reset, loenE, nextlo, lo);
 
 	//transition from execute to memory
 	flopr #(32) aluoutEtoM(clk, reset, aluoutE, aluoutM);
