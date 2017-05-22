@@ -25,4 +25,5 @@ around: slt  $4, $7, $2     # $4 = 3 < 5 = 1        28          00e2202a
 end:    addi $8, $0, 21     # initialize $8 = 21    44          20080015 
         addi $9, $0, 4      # initialize $9 = 4     48          20090004
         mult $8, $9         # hi,lo = 21*4          4c          01090018
-        sw   $2, 84($0)     # write mem[84] = 7     50          ac020054
+        div  $8, $9         # lo = 5, hi = 1        50          0109001a
+        sw   $2, 84($0)     # write mem[84] = 7     54          ac020054
