@@ -1,6 +1,6 @@
 module maindec(	input logic [5:0] op,
  		output logic memtoreg, memwrite,
- 		output logic branch, alusrc,
+ 		output logic branch, bne, alusrc,
  		output logic regdst, regwrite,
  		output logic jump,
  		output logic [1:0] aluop);
@@ -8,7 +8,7 @@ module maindec(	input logic [5:0] op,
  	reg [10:0] controls;
 		assign {bne,ori,regwrite, regdst, alusrc,
 					branch, memwrite,
-					memtoreg, jump, aluop} =controls;
+					memtoreg, jump, aluop} = controls;
 	always @ (*)
 	case(op) // cases of opcode
 		6'b000000: controls <=11'b00110000010; //R-type
