@@ -6,7 +6,7 @@ module controller(	input logic clk, reset,
  			output logic pcsrcD, branchD, bneD, alusrcE,
  			output logic regdstE, regwriteE,
  			output logic regwriteM, regwriteW,
- 			output logic jumpD,
+ 			output logic jumpD, jrD,
  			output logic [3:0] alucontrolE,
 			output logic hienE, loenE);
  	
@@ -18,7 +18,7 @@ module controller(	input logic clk, reset,
 	maindec md(opD, memtoregD, memwriteD, branchD, bneD,
  			alusrcD, regdstD, regwriteD, jumpD, aluopD);
  
-	aludec ad(functD, aluopD, alucontrolD, hienD, loenD);
+	aludec ad(functD, aluopD, alucontrolD, hienD, loenD, jrD);
         //early branch resolution
 	assign pcsrcD = (branchD & equalD) | (bneD & ~equalD);
  	//decode to execute controls transition

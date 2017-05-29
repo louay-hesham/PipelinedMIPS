@@ -24,7 +24,7 @@ module aludec(	input logic [5:0] funct,
 				6'b010000: controls <= 6'b1010_000; // MFHI
 				6'b010010: controls <= 6'b1011_000; // MFLO
 				6'b001000: controls <= 6'bxxxx_xx1; //JR
-				default:   controls <= 6'bxxxx_xxx; // ???
+				default:   controls <= 6'bxxxx_xx0; // ???
 			endcase
 		endcase
 endmodule
