@@ -1,5 +1,5 @@
 module datapath(	input logic clk, reset,
- 			input logic memtoregE, memtoregM, memtoregW,
+ 			input logic[1:0] memtoregE, memtoregM, memtoregW,
  			input logic pcsrcD, branchD, bneD,
  			input logic alusrcE, 
 			input logic[1:0] regdstE,
@@ -75,6 +75,7 @@ module datapath(	input logic clk, reset,
 	floprc #(5)  rsDtoE(clk, reset, flushE, rsD, rsE);
 	floprc #(5)  rtDtoE(clk, reset, flushE, rtD, rtE);
 	floprc #(5)  rdDtoE(clk, reset, flushE, rdD, rdE);
+	floprc #(32) pcplus4DtoE(clk, reset, flushE, pcplus4D, pcplus4E);
 
 	//execute stage
 	mux3 #(5) writeregMux(rtE, rdE, 31,regdstE, writeregE);
@@ -89,6 +90,7 @@ module datapath(	input logic clk, reset,
 	flopr #(32) aluoutEtoM(clk, reset, aluoutE, aluoutM);
 	flopr #(32) writedataEtoM(clk, reset, srcbForwardE, writedataM);
 	flopr #(5) writeregEtoM(clk, reset, writeregE, writeregM);
+	flopr #(32) pcplus4EtoM(clk, reset, pcplus4E, pcplus4M);
 
 	//memory stage
 	//no components in data path so it's empty. the dmem module is instantiated in the top module.
@@ -97,9 +99,11 @@ module datapath(	input logic clk, reset,
 	flopr #(32) readdataMtoW(clk, reset, readdataM, readdataW);
 	flopr #(32) aluoutMtoW(clk, reset, aluoutM, aluoutW);
 	flopr #(5) writeregMtoW(clk, reset, writeregM, writeregW);
+	flopr #(32) pcplus4MtoW(clk, reset, pcplus4M, pcplus4W);
 	
 	//write back stage
-	mux2 #(32) resultMux(aluoutW, readdataW, memtoregW, resultW);
+	mux3 #(32) resultMux(aluoutW, readdataW, pcplus4W, memtoregW, resultW);
+	
 	
 
 endmodule
