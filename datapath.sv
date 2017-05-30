@@ -1,7 +1,8 @@
 module datapath(	input logic clk, reset,
  			input logic memtoregE, memtoregM, memtoregW,
  			input logic pcsrcD, branchD, bneD,
- 			input logic alusrcE, regdstE,
+ 			input logic alusrcE, 
+			input logic[1:0] regdstE,
  			input logic regwriteE, regwriteM, regwriteW,
  			input logic jumpD, jrD,
  			input logic [3:0] alucontrolE,
@@ -76,7 +77,7 @@ module datapath(	input logic clk, reset,
 	floprc #(5)  rdDtoE(clk, reset, flushE, rdD, rdE);
 
 	//execute stage
-	mux2 #(5) writeregMux(rtE, rdE, regdstE, writeregE);
+	mux3 #(5) writeregMux(rtE, rdE, 31,regdstE, writeregE);
 	mux3 #(32) srcaForwardMux (reg1E, resultW, aluoutM, forwardaE, srcaE);
 	mux3 #(32) srcbForwardMux (reg2E, resultW, aluoutM, forwardbE, srcbForwardE);
 	mux2 #(32) srcbmux(srcbForwardE, signimmE, alusrcE, srcbE);
