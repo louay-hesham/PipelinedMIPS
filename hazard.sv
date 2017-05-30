@@ -47,7 +47,7 @@ module hazard(	input logic [4:0] rsD, rtD, rsE, rtE,
 	// Stalling
 	assign #1 lwstall = ( (rsD == rtE) | (rtD == rtE) ) & MemtoRegE;
 	assign #1 branchstall = ((BranchD | bneD) & RegWriteE & (WriteRegE == rsD | WriteRegE == rtD)) | ((BranchD | bneD) & MemtoRegM & (WriteRegM == rsD | WriteRegM == rtD));
-	assign #1 jrstall = (jrD & (rtE == rsD));
+	assign #1 jrstall = ((jrD & RegWriteE & WriteRegE == rsD) | (jrD & MemtoRegM & WriteRegM == rsD));
 	
 	assign #1 StallF = StallD;
 	assign #1 StallD = FlushE;
