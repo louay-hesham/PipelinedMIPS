@@ -20,12 +20,15 @@ around: slt  $4, $7, $2     # $4 = 3 < 5 = 1        28          00e2202a
         sub  $7, $7, $2     # $7 = 12 - 5 = 7       30          00e23822 
         sw   $7, 68($3)     # [80] = 7              34          ac670044 
         lw   $2, 80($0)     # $2 = [80] = 7         38          8c020050 
-        j    end            # should be taken       3c          08000011 
+        j    jTest          # should be taken       3c          08000018 
         addi $2, $0, 1      # shouldn not happen    40          20020001 
 end:    addi $8, $0, 84     # initialize $8 = 84    44          20080054
         addi $9, $0, 4      # initialize $9 = 4     48          20090004
         div  $8, $9         # lo = 21, hi = 0       4c          0109001a
         mflo $10            # $10 = 21              50          00005012
-        mult $10, $9        # hi,lo = 21*4          4c          01490018
-        mflo $11            # $11 = 84              50          00005812
-        sw   $2, 0($11)     # write mem[84] = 7     54          ad620000
+        mult $10, $9        # hi,lo = 21*4          54          01490018
+        mflo $11            # $11 = 84              58          00005812
+        sw   $2, 0($11)     # write mem[84] = 7     5c          ad620000
+jTest:	addi $30,$0,68      # add adress of end     60          201e0044
+        jr   $30            # jump like nothing     64          03c00008
+		add  $25,$0,$0      # should not happen     68          0000c820

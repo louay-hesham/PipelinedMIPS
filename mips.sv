@@ -13,12 +13,12 @@ module mips(	input logic clk, reset,
 			equalD,memtoregE, memtoregM,
  			memtoregW, memwriteM, pcsrcD,
  			branchD, bneD, alusrcE, regdstE, regwriteE,
- 			regwriteM, regwriteW, jumpD, alucontrolE, hienE, loenE);
+ 			regwriteM, regwriteW, jumpD, jrD, alucontrolE, hienE, loenE);
 
  	datapath dp(	clk, reset, memtoregE, memtoregM,
  			memtoregW, pcsrcD, branchD, bneD,
  			alusrcE, regdstE, regwriteE,
- 			regwriteM, regwriteW, jumpD,
+ 			regwriteM, regwriteW, jumpD, jrD,
  			alucontrolE, hienE, loenE, 
 			equalD, pcF, instrF,
  			aluoutM, writedataM, readdataM,
