@@ -31,4 +31,4 @@ end:    addi $8, $0, 84     # initialize $8 = 84    44          20080054
         sw   $2, 0($11)     # write mem[84] = 7     5c          ad620000
 jTest:	addi $30,$0,68      # add adress of end     60          201e0044
         jr   $30            # jump like nothing     64          03c00008
-		add $25,$0,$0       #dummy                  68          0000c820
+		add  $25,$0,$0      # should not happen     68          0000c820
