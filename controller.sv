@@ -1,12 +1,12 @@
 module controller(	input logic clk, reset,
  			input logic [5:0] opD, functD,
 			input logic flushE, equalD,
- 			output logic [1:0]memtoregE, memtoregM, memtoregW,
+ 			output logic [1:0] memtoregE, memtoregM, memtoregW,
  			output logic memwriteM,
  			output logic pcsrcD, branchD, bneD, alusrcE,
  			output logic [1:0]regdstE, 
  			output logic regwriteE, regwriteM, regwriteW,
- 			output logic jumpD, jrD,shiftE,storeselectM,
+ 			output logic jumpD, jrD, shiftE, storeselectM,
  			output logic [3:0] alucontrolE,
 			output logic hienE, loenE);
  	

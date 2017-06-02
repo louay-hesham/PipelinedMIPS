@@ -18,7 +18,7 @@ module mips(	input logic clk, reset,
 
  	datapath dp(	clk, reset, memtoregE, memtoregM,
  			memtoregW, pcsrcD, branchD, bneD,
- 			alusrcE,shiftE, regdstE, regwriteE,
+ 			alusrcE, shiftE, regdstE, regwriteE,
  			regwriteM, regwriteW, jumpD, jrD,
  			alucontrolE, hienE, loenE,storeselectM,
 			equalD, pcF, instrF,
