@@ -22,13 +22,12 @@ around: slt  $4, $7, $2     # $4 = 3 < 5 = 1        28          00e2202a
         lw   $2, 80($0)     # $2 = [80] = 7         38          8c020050 
         j    jal            # should be taken       3c          08000011 
         addi $2, $0, 1      # shouldn not happen    40          20020001
-jal:    jal  jTest          # jump and link         44          0c000019
+jal:    jal  jTest          # jump and link         44          0c000018
 end:    addi $8, $0, 84     # initialize $8 = 84    48          20080054
         addi $9, $0, 4      # initialize $9 = 4     4c          20090004
         div  $8, $9         # lo = 21, hi = 0       50          0109001a
         mflo $10            # $10 = 21              54          00005012
-        mult $10, $9        # hi,lo = 21*4          58          01490018
-        mflo $11            # $11 = 84              5c          00005812
-        sw   $2, 0($11)     # write mem[84] = 7     60          ad620000
-jTest:	jr   $31            # jump like nothing     64          03e00008
-	add  $25,$0,$0      # should not happen     68          0000c820
+        sll  $11,$10,2      # $11=84                58          000a5880
+        sw   $2, 0($11)     # write mem[84] = 7     5c          ad620000
+jTest:	jr   $31            # jump like nothing     60          03e00008
+	add  $25,$0,$0      # should not happen     64          0000c820
