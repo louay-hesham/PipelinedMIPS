@@ -59,8 +59,8 @@ module datapath(	input logic clk, reset,
 	assign rdD = instrD[15:11];
 	assign flushD = pcsrcD | jumpD;
 	
-	signext signext(instrD[15:0], signimmD);
-	signext shamtExt(instrD[10:6], shamtD);
+	signext #(16) signext(instrD[15:0], signimmD);
+	signext #(5)shamtExt(instrD[10:6], shamtD);
 	sl2 leftShift(signimmD, signimmshD);
 	adder branchTargetAddress(signimmshD, pcplus4D, pcbranchD);
 
