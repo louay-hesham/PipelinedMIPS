@@ -108,7 +108,7 @@ module datapath(	input logic clk, reset,
 	flopr #(32) byteoutMtoW(clk, reset, byteoutExtM, byteoutExtW);
 
 	//write back stage
-	mux4 #(32) resultMux(aluoutW, readdataW, pcplus4W,nyteoutExtW, memtoregW, resultW);
+	mux4 #(32) resultMux(aluoutW, readdataW, pcplus4W,byteoutExtW, memtoregW, resultW);
 	
 	
 
