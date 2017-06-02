@@ -8,19 +8,20 @@ module mips(	input logic clk, reset,
  	logic alusrcE, pcsrcD, regwriteE, regwriteM, regwriteW,shiftE,storeselectM;
 	logic [1:0] regdstE, memtoregE, memtoregM, memtoregW;
  	logic [3:0] alucontrolE;
- 	logic flushE, equalD, hienE, loenE;
+ 	logic flushE, equalD, hiloenE;
 
 	controller c(	clk, reset, opD, functD, flushE,
 			equalD,memtoregE, memtoregM,
  			memtoregW, memwriteM, pcsrcD,
  			branchD, bneD, alusrcE, regdstE, regwriteE,
- 			regwriteM, regwriteW, jumpD, jrD,shiftE,storeselectM, alucontrolE, hienE, loenE);
+ 			regwriteM, regwriteW, jumpD, jrD, shiftE, storeselectM,
+			alucontrolE, hiloenE);
 
  	datapath dp(	clk, reset, memtoregE, memtoregM,
  			memtoregW, pcsrcD, branchD, bneD,
  			alusrcE, shiftE, regdstE, regwriteE,
  			regwriteM, regwriteW, jumpD, jrD,
- 			alucontrolE, hienE, loenE,storeselectM,
+ 			alucontrolE, hiloenE, storeselectM,
 			equalD, pcF, instrF,
  			aluoutM, writedataM, readdataM,
  			opD, functD, flushE);

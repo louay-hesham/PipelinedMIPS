@@ -6,7 +6,7 @@ module datapath(	input logic clk, reset,
  			input logic regwriteE, regwriteM, regwriteW,
  			input logic jumpD, jrD,
  			input logic [3:0] alucontrolE,
-			input logic hienE, loenE,storeselectM, 
+			input logic hiloenE, storeselectM, 
  			output logic equalD,
  			output logic [31:0] pcF,
  			input logic [31:0] instrF,
@@ -87,8 +87,8 @@ module datapath(	input logic clk, reset,
 	mux3 #(32) srcbForwardMux (reg2E, resultW, aluoutM, forwardbE, srcbForwardE);
 	mux2 #(32) srcbmux(srcbForwardE, signimmE, alusrcE, srcbE);
 	alu alu(srcaE, srcbE, alucontrolE, aluoutE, nexthi, nextlo, hi, lo);
-	flopenr #(32) hireg(clk, reset, hienE, nexthi, hi);
-	flopenr #(32) loreg(clk, reset, loenE, nextlo, lo);
+	flopenr #(32) hireg(clk, reset, hiloenE, nexthi, hi);
+	flopenr #(32) loreg(clk, reset, hiloenE, nextlo, lo);
 
 	//transition from execute to memory
 	flopr #(32) aluoutEtoM(clk, reset, aluoutE, aluoutM);
