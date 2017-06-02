@@ -28,6 +28,6 @@ end:    addi $8, $0, 84     # initialize $8 = 84    48          20080054
         div  $8, $9         # lo = 21, hi = 0       50          0109001a
         mflo $10            # $10 = 21              54          00005012
         sll  $11,$10,2      # $11=84                58          000a5880
-        sw   $2, 0($11)     # write mem[84] = 7     5c          ad620000
+        sb   $2, 0($11)     # write mem[84] = 7     5c          a1620000
 jTest:	jr   $31            # jump like nothing     60          03e00008
 	add  $25,$0,$0      # should not happen     64          0000c820
