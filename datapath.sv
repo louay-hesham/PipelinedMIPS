@@ -6,7 +6,7 @@ module datapath(	input logic clk, reset,
  			input logic regwriteE, regwriteM, regwriteW,
  			input logic jumpD, jrD,
  			input logic [3:0] alucontrolE,
-			input logic hienE, loenE, 
+			input logic hienE, loenE,storeselectM, 
  			output logic equalD,
  			output logic [31:0] pcF,
  			input logic [31:0] instrF,
@@ -28,7 +28,7 @@ module datapath(	input logic clk, reset,
  	logic [31:0] reg2D, comp2D, reg2E, srcbForwardE, srcbE;
  	logic [31:0] pcplus4D,pcplus4E, pcplus4M, pcplus4W, instrD;
  	logic [31:0] aluoutE, aluoutW,byteoutExtM,byteoutExtW;
- 	logic [31:0] readdataW, resultW;
+ 	logic [31:0] readdataW, resultW,writedatawordM , writedatabyteM;
 	logic [31:0] nexthi, nextlo, hi, lo;
  	
  	hazard h(	rsD, rtD, rsE, rtE,
@@ -92,13 +92,16 @@ module datapath(	input logic clk, reset,
 
 	//transition from execute to memory
 	flopr #(32) aluoutEtoM(clk, reset, aluoutE, aluoutM);
-	flopr #(32) writedataEtoM(clk, reset, srcbForwardE, writedataM);
+	flopr #(32) writedataEtoM(clk, reset, srcbForwardE, writedatawordM);
 	flopr #(5) writeregEtoM(clk, reset, writeregE, writeregM);
 	flopr #(32) pcplus4EtoM(clk, reset, pcplus4E, pcplus4M);
 
 	//memory stage
 	mux4 #(8) byteSelectorMux (readdataM[7:0],readdataM[15:8],readdataM[23:16],readdataM[31:24],aluoutM[1:0],byteout);
 	signext #(8) signextbyte(byteout,byteoutExtM);
+        assign writedatabyteM = writedatawordM & 8'b11111111;
+	mux2 #(32) writedatamux(writedatawordM,writedatabyteM,storeselectM,writedataM);  
+	
 
 	//transition from memory to write back
 	flopr #(32) readdataMtoW(clk, reset, readdataM, readdataW);
