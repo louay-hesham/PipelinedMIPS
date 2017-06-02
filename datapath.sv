@@ -1,7 +1,7 @@
 module datapath(	input logic clk, reset,
  			input logic[1:0] memtoregE, memtoregM, memtoregW,
  			input logic pcsrcD, branchD, bneD,
- 			input logic alusrcE, 
+ 			input logic alusrcE,shiftE, 
 			input logic[1:0] regdstE,
  			input logic regwriteE, regwriteM, regwriteW,
  			input logic jumpD, jrD,
@@ -22,8 +22,8 @@ module datapath(	input logic clk, reset,
  	logic [4:0] writeregE, writeregM, writeregW;
  	logic flushD;
  	logic [31:0] pcnextFD, pcnextbrFD, pcplus4F, pcjumpF, pcbranchD, pcNormalJump;
- 	logic [31:0] signimmD, signimmE, signimmshD;
- 	logic [31:0] reg1D, comp1D, reg1E, srcaE;
+ 	logic [31:0] signimmD, signimmE, signimmshD,shamtD,shamtE;
+ 	logic [31:0] reg1D, comp1D, reg1E, srcaE, srcaForwardE;
  	logic [31:0] reg2D, comp2D, reg2E, srcbForwardE, srcbE;
  	logic [31:0] pcplus4D,pcplus4E, pcplus4M, pcplus4W, instrD;
  	logic [31:0] aluoutE, aluoutW;
@@ -60,6 +60,7 @@ module datapath(	input logic clk, reset,
 	assign flushD = pcsrcD | jumpD;
 	
 	signext signext(instrD[15:0], signimmD);
+	signext shamtExt(instrD[10:6], shamtD);
 	sl2 leftShift(signimmD, signimmshD);
 	adder branchTargetAddress(signimmshD, pcplus4D, pcbranchD);
 
@@ -76,10 +77,12 @@ module datapath(	input logic clk, reset,
 	floprc #(5)  rtDtoE(clk, reset, flushE, rtD, rtE);
 	floprc #(5)  rdDtoE(clk, reset, flushE, rdD, rdE);
 	floprc #(32) pcplus4DtoE(clk, reset, flushE, pcplus4D, pcplus4E);
+	floprc #(32) shamtDtoE(clk, reset, flushE, shamtD, shamtE);
 
 	//execute stage
 	mux3 #(5) writeregMux(rtE, rdE, 5'b11111,regdstE, writeregE);
-	mux3 #(32) srcaForwardMux (reg1E, resultW, aluoutM, forwardaE, srcaE);
+	mux3 #(32) srcaForwardMux (reg1E, resultW, aluoutM, forwardaE, srcaForwardE);
+	mux2 #(32) srcaMux (srcaForwardE,shamtE,shiftE,srcaE);	
 	mux3 #(32) srcbForwardMux (reg2E, resultW, aluoutM, forwardbE, srcbForwardE);
 	mux2 #(32) srcbmux(srcbForwardE, signimmE, alusrcE, srcbE);
 	alu alu(srcaE, srcbE, alucontrolE, aluoutE, nexthi, nextlo, hi, lo);
