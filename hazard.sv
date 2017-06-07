@@ -7,7 +7,7 @@ module hazard(	input logic [4:0] rsD, rtD, rsE, rtE,
  		output logic [1:0] ForwardAE, ForwardBE, 
 		output logic StallF, StallD, FlushE);
  
-	logic lwstall, branchstall, jrstall;
+	logic memorystall, branchstall, jrstall;
  
 
  
@@ -46,13 +46,13 @@ module hazard(	input logic [4:0] rsD, rtD, rsE, rtE,
 	
 	
 	// Stalling
-	assign #1 lwstall = ( (rsD == rtE) | (rtD == rtE) ) & (MemtoRegE != 0);
-	assign #1 branchstall = ((BranchD | bneD) & RegWriteE & (WriteRegE == rsD | WriteRegE == rtD)) | ((BranchD | bneD) & (MemtoRegM != 0) & (WriteRegM == rsD | WriteRegM == rtD));
-	assign #1 jrstall = ((jrD & RegWriteE & WriteRegE == rsD) | (jrD & (MemtoRegM != 0) & WriteRegM == rsD));
+	assign  memorystall = ( (rsD == rtE) | (rtD == rtE) ) & (MemtoRegE != 0);
+	assign  branchstall = ((BranchD | bneD) & RegWriteE & (WriteRegE == rsD | WriteRegE == rtD)) | ((BranchD | bneD) & (MemtoRegM != 0) & (WriteRegM == rsD | WriteRegM == rtD));
+	assign  jrstall = ((jrD & RegWriteE & WriteRegE == rsD) | (jrD & (MemtoRegM != 0) & WriteRegM == rsD));
 	
-	assign #1 StallF = StallD;
-	assign #1 StallD = FlushE;
-	assign #1 FlushE = (lwstall | branchstall | jrstall);
+	assign  StallF = StallD;
+	assign  StallD = FlushE;
+	assign  FlushE = (memorystall | branchstall | jrstall);
  
 
 endmodule
