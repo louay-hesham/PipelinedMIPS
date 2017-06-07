@@ -9,7 +9,6 @@ module alu(input  logic [31:0] a, b,
 			0: y <= a & b;
 			1: y <= a | b;
 			2: y <= a + b;
-			3: y <= 32'bz; 
 			4: y <= a & ~ b; 
 			5: y <= a | ~ b;
 			6: y <= a - b;

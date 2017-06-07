@@ -8,9 +8,9 @@ module aludec(	input logic [5:0] funct,
 
 	always_comb
 		case (aluop)
-			2'b00: controls <= 8'b0010_000; // add (lw,sw,addi)
-			2'b01: controls <= 8'b0110_000; // sub (beq)
-			2'b11: controls <= 8'b0111_000; //slti
+			2'b00: controls <= 8'b0010_000; // add (lw, lb, sw, sb, addi)
+			2'b01: controls <= 8'b0110_000; // sub (beq, bne)
+			2'b11: controls <= 8'b0111_000; // slti
 			default: case(funct) // RTYPE
 				6'b100100: controls <= 8'b0000_000; // AND
 				6'b100101: controls <= 8'b0001_000; // OR
@@ -24,9 +24,9 @@ module aludec(	input logic [5:0] funct,
 				6'b011010: controls <= 8'b1001_100; // DIV
 				6'b010000: controls <= 8'b1010_000; // MFHI
 				6'b010010: controls <= 8'b1011_000; // MFLO
-				6'b001000: controls <= 8'bxxxx_010; //JR
-				6'b000000: controls <= 8'b1100_001; // shiftleft
-				6'b000010: controls <= 8'b1101_001; // shiftleft
+				6'b001000: controls <= 8'bxxxx_01x; // JR
+				6'b000000: controls <= 8'b1100_001; // shift left
+				6'b000010: controls <= 8'b1101_001; // shift right
 				default:   controls <= 8'bxxxx_xxx; // ???
 			endcase
 		endcase
